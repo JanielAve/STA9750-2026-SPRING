@@ -1,0 +1,26 @@
+---
+title: "**Janiel Avelar**"
+---
+*Welcome to my website. All about me.*\
+**Visit my LinkedIn:**\
+[LinkedIn](https://www.linkedin.com/in/janiel-avelar-981022206).\
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+if(!require("leaflet")){
+    options(repos=c(CRAN="https://cloud.r-project.org"))
+    install.packages("leaflet")
+    stopifnot(require("leaflet"))
+}
+
+baruch_longitude <- -73.98333
+baruch_latitude  <- +40.74028
+
+leaflet() |>
+  addTiles() |>
+  setView(baruch_longitude, baruch_latitude, zoom=17) |>
+  addPopups(baruch_longitude, baruch_latitude, 
+            "I am a Master's student at <b>Baruch College</b>!")
+```
