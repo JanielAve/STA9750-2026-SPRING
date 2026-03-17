@@ -1,15 +1,29 @@
----
-title: "mp01.qmd"
----
 
-#' Acquire IPEDS Data for MP#01
-#' 
-#' This function will acquire and standardize all data for MP#01
-#' from IPEDS (https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx)
-#' 
-#' We're starting in 2010 as the data seems to be reasonably complete 
-#' after that point. 
-acquire_ipeds_data <- function(start_year=2010, end_year=2024){
+---
+title: "Mini-Project 01 - Assessing the Impact of SFFA on Campus Diversity One-Year Later"
+author: "JanielAve"
+editor:
+    mode: source
+format:
+    html:
+        echo: false
+        message: false
+        warning: false
+---
+```{r setup, include=FALSE}
+
+library(tidyverse)
+library(stringr)
+library(skimr)
+library(scales)
+
+## Introduction
+
+** In this mini-project, I intend to demonstrate
+my skills at Data Summarization/Exploratory Analysis/Table Formatting in an analysis of Official Statistics/Demography data.**
+
+## Data Acquisition and Preparation
+cquire_ipeds_data <- function(start_year=2010, end_year=2024){
   library(tidyverse)
   library(glue)
   
@@ -128,14 +142,15 @@ acquire_ipeds_data <- function(start_year=2010, end_year=2024){
 
 IPEDS <- acquire_ipeds_data()
 
-# True because "CUNY" (2nd arg) is in the longer string (1st arg)
-str_detect("CUNY Bernard M. Baruch College", "CUNY")
 
-# False because "Hunter" is nowhere in the first argument
-str_detect("CUNY Bernard M. Baruch College", "Hunter")
+Code related to Data Acquisition and Preparation goes here.
 
-names <- c("City College-Miami", "CUNY City College", "CUNY Hunter College")
-str_detect(names, "CUNY")
+Remember that code blocks look like this: 
+
+```{r}
+
+## Exploratory Analysis
+
 
 library(dplyr)
 library(stringr)
@@ -165,10 +180,11 @@ install.packages("skimr")
 library(skimr)
 skim(IPEDS)
 
-#1. How many distinct institutions appear in this data set?
+**#1. How many distinct institutions appear in this data set?**
 IPEDS |> 
   summarize(distinct_count = n_distinct(institution_name))
-#2 How many graduate students were enrolled at Baruch & Farmingdale in 2024?
+
+**#2 How many graduate students were enrolled at Baruch & Farmingdale in 2024?**
 IPEDS |> 
   filter(year == 2024, 
     str_detect(institution_name, "Baruch"),
@@ -182,21 +198,20 @@ IPEDS |>
          level == "all graduate") |>
   mutate(total_grad = rowSums(across(starts_with("enrollment_")))) |> 
   select(institution_name, total_grad)
-#3 How many total students were enrolled at Baruch and Farmingdale in 2024?
+**#3 How many total students were enrolled at Baruch and Farmingdale in 2024?**
 IPEDS |> 
   filter(year == 2024, 
          str_detect(institution_name, "Baruch"), 
          level %in% c("all undergrad", "all graduate")) |> 
   mutate(row_total = rowSums(across(starts_with("enrollment_")))) |> 
   summarize(baruch_total_2024 = sum(row_total))
-
 IPEDS |> 
   filter(year == 2024, 
          str_detect(institution_name, "Farmingdale"), 
          level %in% c("all undergrad", "all graduate")) |> 
   mutate(row_total = rowSums(across(starts_with("enrollment_")))) |> 
   summarize(baruch_total_2024 = sum(row_total))
-#4 Which institution had the highest number of enrolled female students in 2019? 
+**#4 Which institution had the highest number of enrolled female students in 2019?**
 IPEDS |> 
   filter(year == 2019, 
          level %in% c("all undergrad", "all graduate")) |> 
@@ -204,8 +219,8 @@ IPEDS |>
   group_by(institution_name) |> 
   summarize(total_female = sum(female_in_row), .groups = "drop") |> 
   slice_max(total_female, n = 1)
-#5 Which institution with over 1000 total students admitted the highest proportion 
-#of Native Hawaiian or Pacific Islanders first year undergraduates in 2024? 
+**#5 Which institution with over 1000 total students admitted the highest proportion 
+#of Native Hawaiian or Pacific Islanders first year undergraduates in 2024?**
 library(scales)
 IPEDS |> 
   mutate(total_students = rowSums(across(starts_with("enrollment_")))) |> 
@@ -218,9 +233,10 @@ IPEDS |>
   select(institution_name, nhpi_prop)
 percent(0.0300, accuracy=0.01)
 
+## Final Insights and Deliverable
 #Task #6
-#1 Which 5 states had the highest number of graduate students across all institutions
-#located in that state?
+**#1 Which 5 states had the highest number of graduate students across all institutions
+#located in that state?**
 install.packages("gt")
 library(gt)
 
@@ -234,9 +250,9 @@ IPEDS |>
   fmt_number(columns = total_grads, decimals = 0) |>
   cols_label(state = "State", total_grads = "Total Graduate Students")
 
-#2 In 2024, how many first year undergraduates students were enrolled at CUNY/SUNY colleges
+**#2 In 2024, how many first year undergraduates students were enrolled at CUNY/SUNY colleges
 #and which colleges did they attend? Report both absolute enrollment numbers and percent
-#of total first year undergraduates? 
+#of total first year undergraduates? **
 
 library(dplyr)
 library(gt)
@@ -273,8 +289,8 @@ cuny_suny_2024 |>
   fmt_number(columns = first_year_count, decimals = 0) |>
   fmt_percent(columns = pct_of_total, decimals = 1)
 
-#3 How has Baruch's/Farmingdale's total undergraduate enrollment changed over the
-#study period? Report both enrollment numbers and percent change year over year. 
+**#3 How has Baruch's/Farmingdale's total undergraduate enrollment changed over the
+#study period? Report both enrollment numbers and percent change year over year.**
 
 library(dplyr)
 library(stringr)
@@ -304,8 +320,8 @@ IPEDS |>
     year = "Year", 
     total_ungr = "Enrollment", 
     pct_change = "YoY Change" )
-#4 At what 5 institutions did the fraction of white students decrease the most
-#over the period from 2010 to 2020? 
+**#4 At what 5 institutions did the fraction of white students decrease the most
+#over the period from 2010 to 2020?**
 IPEDS |>
   #filtering for the years and levels
   filter(year %in% c(2010, 2020), 
@@ -334,8 +350,8 @@ IPEDS |>
              yr_2010 = "2010 %", 
              yr_2020 = "2020 %", 
              diff = "Total Change")
-#5 In which 3 states did the fraction of female undergraduates increase the most
-#over the period from 2010 to 2024?
+**#5 In which 3 states did the fraction of female undergraduates increase the most
+#over the period from 2010 to 2024?**
 
 IPEDS |>
   filter(year %in% c(2010, 2024), level == "all undergrad") |>
@@ -352,6 +368,8 @@ IPEDS |>
   cols_label(state = "State", yr_2010 = "2010 % Female", yr_2024 = "2024 % Female", increase = "Growth")
 
 
+
+Code related to the final deliverable of the assignment goes here. 
 
 #for oped
 # 2023 vs 2024 First-Year Comparison
@@ -444,52 +462,29 @@ all_groups_trend |>
     columns = ends_with("_change"),
     fn = scales::col_numeric(palette = c("red", "white", "blue"), domain = c(-0.05, 0.05))
   )
-
-# OP-ED:
-Janiel Avelar
-Intro:
-On June 29, 2023, The US Supreme Court changed higher education in the United States of
-America. The outcome of the case Students for Fair Admissions v. Harvard shifted the way
-admissions will be performed. The outcome of the case ended an era in which race-conscious
-admissions practices were executed by higher education organizations. Have our schools
-changed after no longer having diversity protected at the federal level. We shall analyze the
-admissions data from 2024 and earlier years to determine any diversity changes at Farmingdale
-State College and Baruch College, two different environmental settings, but both with the same
-results. Diversity is still of utmost importance to both our educational organizations.
-Our Definition of Diversity:
-Diversity to us is the ability to provide the opportunity of education to individuals from any
-background which includes any race, any ethnicity, any gender, and any sexual orientation.
-Having diversity helps us create a campus and environment which brings diverse viewpoints
-and ideas in order to grow as an educational organization. Having a diverse environment
-prepares us all for a world filled with different cultural backgrounds and ideas.
-Organization Stats:
+  
+  **OP-ED:**
+  **Intro:**
+On June 29, 2023, The US Supreme Court changed higher education in the United States of America. The outcome of the case Students for Fair Admissions v. Harvard shifted the way admissions will be performed. The outcome of the case ended an era in which race-conscious admissions practices were executed by higher education organizations. Have our schools changed after no longer having diversity protected at the federal level. We shall analyze the admissions data from 2024 and earlier years to determine any diversity changes at Farmingdale State College and Baruch College, two different environmental settings, but both with the same results. Diversity is still of utmost importance to both our educational organizations.
+Our Definition of Diversity: 
+Diversity to us is the ability to provide the opportunity of education to individuals from any background which includes any race, any ethnicity, any gender, and any sexual orientation. Having diversity helps us create a campus and environment which brings diverse viewpoints and ideas in order to grow as an educational organization. Having a diverse environment prepares us all for a world filled with different cultural backgrounds and ideas. 
+**Organization Stats:**
 Baruch College:
-CUNY Baruch College is located in the greatest city on Earth, NYC, in 2024 we had a total of
-3,585 Graduate students. The total number of students enrolled at Baruch was 20,081. Now for
-the important number which is the admissions of 2024, our first year undergrad admissions
-were 2,532 which are welcomed to our community. Our year to year change between
-2023-2024 was from 1.2% to 2.5%, therefore we saw growth in our enrollment. Unfortunately,
-we did see a decrease in our incoming first year students between those years, we saw a drop
-of -3.1% which is not major, but we must keep monitoring in future years.
+CUNY Baruch College is located in the greatest city on Earth, NYC, in 2024 we had a total of 3,585 Graduate students. The total number of students enrolled at Baruch was 20,081. Now for the important number which is the admissions of 2024, our first year undergrad admissions were 2,532 which are welcomed to our community. Our year to year change between 2023-2024 was from 1.2% to 2.5%, therefore we saw growth in our enrollment. Unfortunately, we did see a decrease in our incoming first year students between those years, we saw a drop of -3.1% which is not major, but we must keep monitoring in future years.
 Farmingdale State College:
-SUNY Farmingdale State College is located on Long Island in a more suburban area, at
-Farmingdale we had 32 graduate students, which makes sense because until recently we
-added graduate programs to our curriculum. The total number of students enrolled at
-Farmingdale State College was 10,039. The total new undergrad admissions was 1,822. Our
-year to year change from 2023-2024 was from 2.6% to 5.2% which is an amazing growth
-amount. Unlike Baruch, at Farmingdale we saw a good amount of growth between the same
-years when it comes to incoming first year students, the growth was 8.7%.
-Demographics Changes Between 2023-2024:
-For Baruch College we only saw a negative change in one of our ethnic groups. That ethnic
-group is the Asian demographic but it was a -0.2% drop, all other groups stayed the same
-between both years or increased a bit. For Farmingdale State College we did see a bigger drop
-in one ethnic group. Unfortunately, we saw a -3.3% shift in the White demographic, but we did
-see increases in all other demographic ethnic groups. For long term diversity trends in both
-institutions we do see decreases in the White students fractions, we must understand why this
-is occurring. For other demographic groups we do see continued increases therefore diversity
-continues to be part of both our institutions despite the choices of the Supreme Court.
-AI USAGE STATEMENT:
-Gemini was used to help write the code in this project, but all non-code text was generated
-without the use of any Generative AI tools. Additionally, Gemini was used to provide
-additional background information on the topic and to brainstorm ideas for the final
-open-ended prompt.
+SUNY Farmingdale State College is located on Long Island in a more suburban area, at Farmingdale we had 32 graduate students, which makes sense because until recently we added graduate programs to our curriculum. The total number of students enrolled at Farmingdale State College was 10,039. The total new undergrad admissions was 1,822. Our year to year change from 2023-2024 was from 2.6% to 5.2% which is an amazing growth amount. Unlike Baruch, at Farmingdale we saw a good amount of growth between the same years when it comes to incoming first year students, the growth was 8.7%. 
+
+**Demographics Changes Between 2023-2024:**
+For Baruch College we only saw a negative change in one of our ethnic groups. That ethnic group is the Asian demographic but it was a -0.2% drop, all other groups stayed the same between both years or increased a bit. For Farmingdale State College we did see a bigger drop in one ethnic group. Unfortunately, we saw a -3.3% shift in the White demographic, but we did see increases in all other demographic ethnic groups. For long term diversity trends in both institutions we do see decreases in the White students fractions, we must understand why this is occurring. For other demographic groups we do see continued increases therefore diversity continues to be part of both our institutions despite the choices of the Supreme Court.
+
+**AI USAGE STATEMENT:**
+Gemini was used to help write the code in this project, but all non-code text was generated without the use of any Generative AI tools. Additionally, Gemini was used to provide additional background information on the topic and to brainstorm ideas for the final open-ended prompt.
+
+
+------------------------------------------------------------------------
+
+This work ©2025 by JanielAve was initially prepared as a Mini-Project for
+STA 9750 at Baruch College. More details about this course can be found at
+[the course site](https://michael-weylandt.com/STA9750) and instructions for
+this assignment can be found at 
+[MP #01](https://michael-weylandt.com/STA9750/mini/mini01.html)
