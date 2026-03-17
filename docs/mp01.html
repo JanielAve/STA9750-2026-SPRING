@@ -126,103 +126,119 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>** In this mini-project, I intend to demonstrate my skills at Data Summarization/Exploratory Analysis/Table Formatting in an analysis of Official Statistics/Demography data.**</p>
-</section>
-<section id="data-acquisition-and-preparation" class="level2">
-<h2 class="anchored" data-anchor-id="data-acquisition-and-preparation">Data Acquisition and Preparation</h2>
-<p>cquire_ipeds_data &lt;- function(start_year=2010, end_year=2024){ library(tidyverse) library(glue)</p>
-<p>data_dir &lt;- file.path(“data”, “mp01”)</p>
-<p>if(!dir.exists(data_dir)){ dir.create(data_dir, showWarnings=FALSE, recursive=TRUE) }</p>
-<p>YEARS &lt;- seq(start_year, end_year)</p>
-<p>EFA_ALL &lt;- map(YEARS, function(yy){ if(yy &lt;= 2022){ ef_url &lt;- glue(“https://nces.ed.gov/ipeds/datacenter/data/EF{yy}A.zip”)</p>
-<pre><code>} else {
-  ef_url &lt;- glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&amp;tableName=EF{yy}A&amp;HasRV=0&amp;type=csv")
+<p>## Data Acquisition and Preparation cquire_ipeds_data &lt;- function(start_year=2010, end_year=2024){ library(tidyverse) library(glue)</p>
+<pre><code>data_dir &lt;- file.path("data", "mp01")
+
+if(!dir.exists(data_dir)){
+  dir.create(data_dir, showWarnings=FALSE, recursive=TRUE)
 }
 
-ef_file &lt;- file.path(data_dir, glue("ef{yy}a.csv.zip"))
+YEARS &lt;- seq(start_year, end_year)
 
-if(!file.exists(ef_file)){
-  message(glue("Downloading Enrollment Data for {yy} from {ef_url}"))
-  download.file(ef_url, destfile = ef_file, quiet=TRUE, mode="wb")    
-}
-
-read_csv(ef_file, 
-         show_col_types=FALSE) |&gt;
-  mutate(year = yy, 
-         # American Indian or Alaskan Native
-         enrollment_m_aian = EFAIANM, 
-         enrollment_f_aian = EFAIANW, 
-         # Asian
-         enrollment_m_asia = EFASIAM, 
-         enrollment_f_asia = EFASIAW, 
-         # Black or African-American, 
-         enrollment_m_bkaa = EFBKAAM, 
-         enrollment_f_bkaa = EFBKAAW, 
-         # Hispanic 
-         enrollment_m_hisp = EFHISPM, 
-         enrollment_f_hisp = EFHISPW, 
-         # Native Hawaiian or Other Pacific Islander 
-         enrollment_m_nhpi = EFNHPIM, 
-         enrollment_f_nhpi = EFNHPIW, 
-         # White
-         enrollment_m_whit = EFWHITM, 
-         enrollment_f_whit = EFWHITW, 
-         # Two or More Races
-         enrollment_m_2mor = EF2MORM, 
-         enrollment_f_2mor = EF2MORW, 
-         # Unknown / Undisclosed Race
-         enrollment_m_unkn = EFUNKNM, 
-         enrollment_f_unkn = EFUNKNW, 
-         # US Non-Resident
-         enrollment_m_nral = EFNRALM, 
-         enrollment_f_nral = EFNRALW, 
-  ) |&gt; filter(
-    (EFALEVEL %in% c(2, 12)) | (LINE %in% c(1, 15))
-    # Per 2024 Data Dictionary, 
-    # - EFALEVEL 2 = undergrad 
-    # - EFALELVE 12 = grad
-    # - Line 1 = first year first time full-time undergrad
-    # - Line 15 = first year first time part-time undergrad
-  ) |&gt; mutate(level = case_when(
-    EFALEVEL == 2 ~ "all undergrad", 
-    EFALEVEL == 12 ~ "all graduate",
-    LINE %in% c(1, 15) ~ "first year undergrad"
-  )
-  ) |&gt;
-  select(institution_id = UNITID, 
-         year, 
-         level,
-         starts_with("enrollment_")) |&gt;
-  group_by(institution_id, 
-           year, 
-           level) |&gt;
-  summarize(across(starts_with("enrollment_"), sum), 
-            .groups = "drop")</code></pre>
-<p>}) |&gt; bind_rows()</p>
-<p>DESC_ALL &lt;- map(YEARS, function(yy){ if(yy &lt;= 2022){ hd_url &lt;- glue(“https://nces.ed.gov/ipeds/datacenter/data/HD{yy}.zip”)</p>
-<pre><code>} else {
-  hd_url &lt;- glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&amp;tableName=HD{yy}&amp;HasRV=0&amp;type=csv")
-}
-
-hd_file &lt;- file.path(data_dir, glue("hd{yy}.csv.zip"))
-
-if(!file.exists(hd_file)){
-  message(glue("Downloading Institutional Descriptions for {yy} from {hd_url}"))
-  download.file(hd_url, destfile = hd_file, quiet=TRUE, mode="wb")    
-}
-
-suppressWarnings(
-  read_csv(hd_file, 
-           show_col_types=FALSE, 
-           locale=locale(encoding=if_else(yy==2024, "utf-8", "windows-1252"))) |&gt;
+EFA_ALL &lt;- map(YEARS, function(yy){
+  if(yy &lt;= 2022){
+    ef_url &lt;- glue("https://nces.ed.gov/ipeds/datacenter/data/EF{yy}A.zip")
+    
+  } else {
+    ef_url &lt;- glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&amp;tableName=EF{yy}A&amp;HasRV=0&amp;type=csv")
+  }
+  
+  ef_file &lt;- file.path(data_dir, glue("ef{yy}a.csv.zip"))
+  
+  if(!file.exists(ef_file)){
+    message(glue("Downloading Enrollment Data for {yy} from {ef_url}"))
+    download.file(ef_url, destfile = ef_file, quiet=TRUE, mode="wb")    
+  }
+  
+  read_csv(ef_file, 
+           show_col_types=FALSE) |&gt;
     mutate(year = yy, 
-           INSTNM) |&gt; 
+           # American Indian or Alaskan Native
+           enrollment_m_aian = EFAIANM, 
+           enrollment_f_aian = EFAIANW, 
+           # Asian
+           enrollment_m_asia = EFASIAM, 
+           enrollment_f_asia = EFASIAW, 
+           # Black or African-American, 
+           enrollment_m_bkaa = EFBKAAM, 
+           enrollment_f_bkaa = EFBKAAW, 
+           # Hispanic 
+           enrollment_m_hisp = EFHISPM, 
+           enrollment_f_hisp = EFHISPW, 
+           # Native Hawaiian or Other Pacific Islander 
+           enrollment_m_nhpi = EFNHPIM, 
+           enrollment_f_nhpi = EFNHPIW, 
+           # White
+           enrollment_m_whit = EFWHITM, 
+           enrollment_f_whit = EFWHITW, 
+           # Two or More Races
+           enrollment_m_2mor = EF2MORM, 
+           enrollment_f_2mor = EF2MORW, 
+           # Unknown / Undisclosed Race
+           enrollment_m_unkn = EFUNKNM, 
+           enrollment_f_unkn = EFUNKNW, 
+           # US Non-Resident
+           enrollment_m_nral = EFNRALM, 
+           enrollment_f_nral = EFNRALW, 
+    ) |&gt; filter(
+      (EFALEVEL %in% c(2, 12)) | (LINE %in% c(1, 15))
+      # Per 2024 Data Dictionary, 
+      # - EFALEVEL 2 = undergrad 
+      # - EFALELVE 12 = grad
+      # - Line 1 = first year first time full-time undergrad
+      # - Line 15 = first year first time part-time undergrad
+    ) |&gt; mutate(level = case_when(
+      EFALEVEL == 2 ~ "all undergrad", 
+      EFALEVEL == 12 ~ "all graduate",
+      LINE %in% c(1, 15) ~ "first year undergrad"
+    )
+    ) |&gt;
     select(institution_id = UNITID, 
-           institution_name = INSTNM, 
-           state = STABBR, 
-           year)
-)</code></pre>
-<p>}) |&gt; bind_rows()</p>
-<p>inner_join(EFA_ALL, DESC_ALL, join_by(institution_id == institution_id, year == year)) }</p>
+           year, 
+           level,
+           starts_with("enrollment_")) |&gt;
+    group_by(institution_id, 
+             year, 
+             level) |&gt;
+    summarize(across(starts_with("enrollment_"), sum), 
+              .groups = "drop")
+  
+}) |&gt; bind_rows()
+
+DESC_ALL &lt;- map(YEARS, function(yy){
+  if(yy &lt;= 2022){
+    hd_url &lt;- glue("https://nces.ed.gov/ipeds/datacenter/data/HD{yy}.zip")
+    
+  } else {
+    hd_url &lt;- glue("https://nces.ed.gov/ipeds/data-generator?year={yy}&amp;tableName=HD{yy}&amp;HasRV=0&amp;type=csv")
+  }
+  
+  hd_file &lt;- file.path(data_dir, glue("hd{yy}.csv.zip"))
+  
+  if(!file.exists(hd_file)){
+    message(glue("Downloading Institutional Descriptions for {yy} from {hd_url}"))
+    download.file(hd_url, destfile = hd_file, quiet=TRUE, mode="wb")    
+  }
+  
+  suppressWarnings(
+    read_csv(hd_file, 
+             show_col_types=FALSE, 
+             locale=locale(encoding=if_else(yy==2024, "utf-8", "windows-1252"))) |&gt;
+      mutate(year = yy, 
+             INSTNM) |&gt; 
+      select(institution_id = UNITID, 
+             institution_name = INSTNM, 
+             state = STABBR, 
+             year)
+  )
+  
+}) |&gt; bind_rows()
+
+inner_join(EFA_ALL, 
+           DESC_ALL, 
+           join_by(institution_id == institution_id, 
+                   year == year))</code></pre>
+<p>}</p>
 <p>IPEDS &lt;- acquire_ipeds_data()</p>
 <p>Code related to Data Acquisition and Preparation goes here.</p>
 <p>Remember that code blocks look like this:</p>
