@@ -1,0 +1,566 @@
+
+---
+title: "Mini-Project 04 - Going for the Gold"
+author: "janielave"
+format:
+  html:
+    code-fold: true
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+editor: source
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+The 2028 Summer Olympics in Los Angeles are expected to generate substantial
+interest from sports fans, sponsors, and sports bettors alike. In this project,
+I use historical Olympic medal data scraped directly from Olympedia to forecast
+Team USA's expected medal performance at the 2028 Olympics.
+
+This analysis focuses on three major effects believed to influence Olympic
+performance:
+
+1. Baseline United States Olympic performance
+2. Host nation advantage
+3. New sport advantage
+
+Using web scraping, data cleaning, exploratory data analysis, statistical
+inference, and Monte Carlo simulation, I estimate confidence intervals for each
+effect and combine them into a forecast for Team USA's gold medal count in 2028.
+
+##Data Acquisition & Prep
+```{r}
+library(tidyverse)
+library(rvest)
+library(janitor)
+library(fs)
+library(stringr)
+library(purrr)
+library(infer)
+library(sf)
+library(necountries)
+library(broom)
+library(gt)
+```
+
+##Olympedia Data
+
+```{r}
+slow_download <- purrr::slowly(
+  download.file,
+  purrr::rate_delay(pause = 5)
+)
+
+read_olympedia <- function(url, ...){
+
+    if(stringr::str_starts(url, "/")){
+        url <- stringr::str_remove(url, "/")
+    }
+
+    cache_dir <- fs::path("data", "mp04", "olympedia_cache")
+
+    if(!fs::dir_exists(cache_dir)){
+        fs::dir_create(cache_dir, recurse = TRUE)
+    }
+
+    cache_path <- fs::path(
+        cache_dir,
+        stringr::str_replace_all(url, "/", "_")
+    )
+
+    if(!fs::file_exists(cache_path)){
+
+        src_url <- paste0(
+            "https://www.olympedia.org/",
+            url
+        )
+
+        slow_download(
+            src_url,
+            cache_path,
+            mode = "wb"
+        )
+    }
+
+    read_html(cache_path)
+}
+
+```
+
+```{r}
+editions_page <- read_olympedia("editions")
+
+editions_table <- editions_page |>
+  html_element("table") |>
+  html_table()
+
+# clean names safely
+names(editions_table) <- names(editions_table) |>
+  as.character()
+
+names(editions_table)[is.na(names(editions_table)) | names(editions_table) == ""] <- "blank"
+
+names(editions_table) <- names(editions_table) |>
+  str_to_lower() |>
+  str_replace_all("[^a-z0-9]+", "_")
+
+# -------------------------
+# FIXED LINK EXTRACTION
+# -------------------------
+editions_links <- editions_page |>
+  html_element("table") |>
+  html_elements("tr td:first-child a") |>
+  html_attr("href")
+
+length(editions_links)
+nrow(editions_table)
+head(editions_links)
+head(editions_table)
+```
+##Cleaning & Standardization:
+```{r}
+names(editions_table)
+names(editions_links)
+ls()
+```
+```{r}
+library(tidyverse)
+library(rvest)
+library(stringr)
+
+get_sports <- function(edition_url){
+
+  page <- read_olympedia(edition_url)
+
+  page |>
+    html_elements("a[href*='/sports/']") |>
+    html_attr("href") |>
+    unique() |>
+    tibble(sport_url = _) |>
+    mutate(edition_url = edition_url)
+}
+```
+```{r}
+sports_links <- editions_links |>
+  map_dfr(get_sports)
+```
+```{r}
+head(sports_links)
+```
+```{r}
+library(tidyverse)
+library(rvest)
+library(janitor)
+
+get_medals <- function(sport_url){
+
+  page <- tryCatch(read_olympedia(sport_url), error = function(e) return(NULL))
+  if(is.null(page)) return(tibble())
+
+  tables <- page |> html_elements("table") |> html_table(fill = TRUE)
+
+  if(length(tables) == 0) return(tibble())
+
+  medal_table <- tables |>
+    keep(~ any(grepl("USA|GER|FRA|GBR|AUS|JPN|CHN|GRE|CAN", unlist(.x))))
+
+  if(length(medal_table) == 0) return(tibble())
+
+  medal_table <- medal_table[[1]]
+
+  names(medal_table) <- make.unique(names(medal_table))
+
+  medal_table
+}
+
+olympic_data <- sports_links |>
+  mutate(medal_table = purrr::map(sport_url, get_medals)) |>
+  tidyr::unnest(medal_table) |>
+  mutate(
+    edition_url = stringr::str_extract(sport_url, "/editions/\\d+")
+  )
+
+names(olympic_data)
+head(olympic_data)
+```
+```{r}
+library(tidyverse)
+library(stringr)
+
+# ---------------------------
+# STEP 9: CLEAN MEDAL DATASET
+# ---------------------------
+
+medals_clean <- olympic_data |>
+  
+  # keep only rows that actually contain medal results
+  filter(!is.na(Event), Event != "") |>
+  
+  # standardize column names (your scrape created duplicates)
+  rename(
+    event = Event,
+    gold = Gold,
+    silver = Silver,
+    bronze = Bronze
+  ) |>
+  
+  # fix weird encoding artifacts
+  mutate(across(c(gold, silver, bronze),
+                ~ na_if(.x, "—"))) |>
+  
+  # remove empty strings
+  mutate(across(c(gold, silver, bronze),
+                ~ na_if(.x, ""))) |>
+  
+  # ensure character consistency
+  mutate(across(c(gold, silver, bronze), as.character)) |>
+  
+  # keep only real medal rows (drop metadata rows if present)
+  filter(!str_detect(event, "Dates|Venues|Medal Events")) |>
+  
+  # optional: remove duplicate rows caused by scraping
+  distinct()
+
+# ---------------------------
+# CREATE COUNTRY MEDAL COUNTS
+# ---------------------------
+
+country_medals <- medals_clean |>
+  pivot_longer(
+    cols = c(gold, silver, bronze),
+    names_to = "medal_type",
+    values_to = "country"
+  ) |>
+  
+  filter(!is.na(country)) |>
+  
+  mutate(
+    gold_count   = ifelse(medal_type == "gold", 1, 0),
+    silver_count = ifelse(medal_type == "silver", 1, 0),
+    bronze_count = ifelse(medal_type == "bronze", 1, 0)
+  ) |>
+  
+  group_by(sport_url, edition_url, event, country) |>
+  summarise(
+    gold_count = sum(gold_count),
+    silver_count = sum(silver_count),
+    bronze_count = sum(bronze_count),
+    .groups = "drop"
+  )
+
+# ---------------------------
+# SANITY CHECKS
+# ---------------------------
+
+glimpse(country_medals)
+
+nrow(country_medals)
+
+country_medals |>
+  summarise(
+    total_gold = sum(gold_count),
+    total_silver = sum(silver_count),
+    total_bronze = sum(bronze_count),
+    unique_countries = n_distinct(country),
+    unique_events = n_distinct(event)
+  )
+```  
+##Exploratory Analysis:
+```{r}
+library(tidyverse)
+library(infer)
+
+# -----------------------------
+# CREATE US DATASET
+# -----------------------------
+us_medals <- country_medals |>
+  filter(country %in% c("USA", "United States", "United States of America"))
+
+# -----------------------------
+# 1. US BASELINE PERFORMANCE
+# -----------------------------
+
+us_baseline <- us_medals |>
+  group_by(edition_url) |>
+  summarise(
+    gold = sum(gold_count),
+    silver = sum(silver_count),
+    bronze = sum(bronze_count),
+    total = gold + silver + bronze,
+    .groups = "drop"
+  )
+
+mean_us_gold <- mean(us_baseline$gold, na.rm = TRUE)
+mean_us_gold
+
+```
+##US Gold Over Time Viz
+```{r}
+ggplot(us_baseline, aes(x = edition_url, y = gold, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "US Gold Medals Across Olympic Editions",
+    x = "Olympic Edition",
+    y = "Gold Medals"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+hosts <- country_medals |>
+  distinct(edition_url, country) |>
+  group_by(edition_url) |>
+  slice(1) |>
+  ungroup() |>
+  rename(host_country = country)
+
+
+host_effect <- country_medals |>
+  left_join(hosts, by = "edition_url") |>
+  mutate(is_host = (country == host_country)) |>
+  group_by(is_host) |>
+  summarise(
+    avg_gold = mean(gold_count, na.rm = TRUE),
+    avg_silver = mean(silver_count, na.rm = TRUE),
+    avg_bronze = mean(bronze_count, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+host_effect
+```
+##Host Effect Viz
+```{r}
+country_medals |>
+  left_join(hosts, by = "edition_url") |>
+  mutate(is_host = (country == host_country)) |>
+  group_by(edition_url, country, is_host) |>
+  summarise(
+    total_gold = sum(gold_count, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(x = is_host, y = total_gold)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1, alpha = 0.3) +
+  labs(
+    title = "Host vs Non-Host Gold Medals (Edition-Level)",
+    x = "Host Country",
+    y = "Gold Medals"
+  )
+```
+
+```{r}
+first_sport <- country_medals |>
+  group_by(sport_url) |>
+  summarise(first_edition = min(edition_url), .groups = "drop")
+```
+
+```{r}
+new_sport_data <- country_medals |>
+  left_join(first_sport, by = "sport_url") |>
+  mutate(
+    is_new_sport = (edition_url == first_edition),
+    wins_gold = gold_count > 0
+  )
+
+new_sport_effect <- new_sport_data |>
+  group_by(is_new_sport) |>
+  summarise(
+    prob_gold = mean(wins_gold, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+new_sport_effect
+```
+```{r}
+summary_table <- country_medals |>
+  summarise(
+    total_gold = sum(gold_count, na.rm = TRUE),
+    total_silver = sum(silver_count, na.rm = TRUE),
+    total_bronze = sum(bronze_count, na.rm = TRUE),
+    unique_events = n_distinct(event)
+  )
+
+summary_table
+```
+##Stats Analysis:
+#Host Effect
+```{r}
+library(infer)
+library(tidyverse)
+
+us_ci_gold <- us_baseline |>
+  t_test(gold ~ NULL)
+
+us_ci_silver <- us_baseline |>
+  t_test(silver ~ NULL)
+
+us_ci_bronze <- us_baseline |>
+  t_test(bronze ~ NULL)
+us_ci_bronze
+us_ci_silver
+us_ci_gold
+```
+```{r}
+host_df <- country_medals |>
+  left_join(hosts, by = "edition_url") |>
+  mutate(is_host = (country == host_country))
+```
+
+
+```{r}
+host_gold_test <- host_df |>
+  mutate(is_host = as.factor(is_host)) |>
+  t_test(gold_count ~ is_host)
+
+host_gold_test
+```
+```{r}
+host_silver_test <- host_df |>
+  mutate(is_host = as.factor(is_host)) |>
+  t_test(silver_count ~ is_host)
+
+host_silver_test
+```
+```{r}
+host_bronze_test <- host_df |>
+  mutate(is_host = as.factor(is_host)) |>
+  t_test(bronze_count ~ is_host)
+
+host_bronze_test
+```
+
+#New Sport Effect
+```{r}
+country_medals <- country_medals |>
+  mutate(
+    edition_id = readr::parse_number(edition_url)
+  )
+
+first_sport <- country_medals |>
+  group_by(sport_url) |>
+  summarise(
+    first_edition = min(edition_id, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+new_sport_df <- country_medals |>
+  left_join(first_sport, by = "sport_url") |>
+  mutate(
+    is_new_sport = edition_id == first_edition,
+    won_gold = gold_count > 0
+  )
+table(new_sport_df$is_new_sport)
+
+new_sport_summary <- new_sport_df |>
+  group_by(is_new_sport) |>
+  summarise(
+    successes = sum(won_gold, na.rm = TRUE),
+    total = n(),
+    .groups = "drop"
+  )
+
+new_sport_summary
+
+stats::prop.test(
+  x = new_sport_summary$successes,
+  n = new_sport_summary$total
+)
+```
+##Forecasts:
+```{r}
+library(tidyverse)
+
+# US baseline (mean gold medals per Olympics)
+mu_us <- mean(us_baseline$gold, na.rm = TRUE)
+sd_us <- sd(us_baseline$gold, na.rm = TRUE)
+
+# Host effect multiplier (from your earlier inference; adjust if needed)
+host_mean <- host_effect |>
+  filter(is_host == TRUE) |>
+  summarise(mean(avg_gold)) |>
+  pull()
+
+nonhost_mean <- host_effect |>
+  filter(is_host == FALSE) |>
+  summarise(mean(avg_gold)) |>
+  pull()
+
+host_uplift <- host_mean / nonhost_mean
+```
+```{r}
+p_new_sport <- new_sport_summary$successes / new_sport_summary$total
+```
+```{r}
+set.seed(123)
+
+n_sims <- 10000
+
+baseline_sim <- rnorm(n_sims, mean = mu_us, sd = sd_us)
+host_sim <- rnorm(n_sims, mean = host_uplift, sd = 0.02)
+
+# 2028 LA adds 5 new sports
+new_sports <- 5
+
+new_sport_sim <- rbinom(n_sims, size = new_sports, prob = p_new_sport)
+```
+```{r}
+usa_gold_2028 <- baseline_sim * host_sim + new_sport_sim
+```
+```{r}
+ci_2028 <- quantile(usa_gold_2028, c(0.025, 0.5, 0.975))
+ci_2028
+```
+```{r}
+tibble(usa_gold_2028) |>
+  ggplot(aes(x = usa_gold_2028)) +
+  geom_histogram(bins = 40) +
+  labs(
+    title = "Simulated USA Gold Medals - LA 2028",
+    x = "Gold Medals",
+    y = "Frequency"
+  )
+```  
+```{r}
+tibble(
+  mean_prediction = mean(usa_gold_2028),
+  lower_bound = ci_2028[1],
+  median = ci_2028[2],
+  upper_bound = ci_2028[3]
+)
+```
+## Final Insights and Deliverable
+
+This reports forecasts the expected performance of Team USA in the upcoming 2028 Olympic Games that will take place in Los Angeles. Three Factors were used to establish this forecasts, the Baseline Performance, Host Country Effect, and the New Sports Effect. 
+
+1. Baseline Performance: 
+The USA historical average of gold medal results provdes a foundation which helps to show the competitiveness of the USA Team at the Olympic Games. 
+2. Host Country Effect: 
+The data demonstrates that host countries tend to perform a bit better when perfroming in front of there home fans. This demonstrates that the USA will have an advantage in the 2028 Olympic games.
+3. New Sports Effect:
+The upcoming Olympic games will probably introduce additional sports which will create more opportunities for gold medals. The USA should benefit from this because they have demonstrated an increase in competitiveness in emerging sports. 
+
+Combined Forecast: 
+The Monte Carlo Simulations integrates the three factors mentioned previously. The simulation predicts that the US will receive a median forecasts of around 11-12 gold medals based on the three factors. The forecast suggests a good performance by the USA Team.
+
+Conclusion: 
+
+The USA Team will enter the 2028 Olympic games knowing that they should have a good competitive performance. The three factors which include historical performance, host advantage, and new sport additions demonstrate that the USA Team is in a good place to make there country proud.
+
+
+::: {.callout-note title="AI Usage Statement" collapse="true"}
+ChatGPT was used to help write the code in this project, but all non-code text was generated without the use of any Generative AI tools. Additionally, ChatGPT was used to provide additional background information on the topic and to brainstorm ideas for the final open-ended prompt.
+:::
+
+
+------------------------------------------------------------------------
+
+This work ©2025 by janielave was initially prepared as a Mini-Project for
+STA 9750 at Baruch College. More details about this course can be found at
+[the course site](https://michael-weylandt.com/STA9750) and instructions for
+this assignment can be found at 
+[MP #04](https://michael-weylandt.com/STA9750/mini/mini04.html)
