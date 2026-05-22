@@ -1,0 +1,264 @@
+---
+title: "IndividualReportJ"
+author: "Janiel Avelar"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(corrplot)
+library(gt)
+library(GGally)
+library(patchwork)
+
+theme_set(theme_minimal())
+```
+
+# Introduction
+
+Rivers in South Africa are impacted by agriculture, urbanization, and climate varibles. Water quality testing and is important in order to maintain a safe water source to the public and environment.
+However, field-based testing monitoring is expensive and has geographical limits, especially across large river systems.
+
+Advances in satellite remote sensing provide new forms of opportunities when it comes to testing and monitoring water quality. The use of imagery and climate datasets helps to study the condtions of rivers in South Africa. In this analysis we will use imagery and climate datasets to see if they can explain the water quality of rivers across South Africa
+
+The overarching question for the project was:
+
+> *Can we accurately forecast river water quality parameters in South Africa using publicly available satellite and climate datasets?*
+
+My contribution focused on Specific Question 5:
+
+> *Do land use characteristics surrounding each river station improve predictions of Dissolved Reactive Phosphorus (DRP), and which land use type is most associated with elevated phosphorus?*
+
+Phosphorus contamination was difficult to detect because it does not present strong spectral signatures in satellite imagery. Therefore, the purpose of the analysis is to determine whether or not land use indicators from the Landsat 8 dataset show meaningful correlations with Dissolved Reactive Phosphorus. These indicators include vegetation and urban density proxies.
+
+# Background & Prior Literature
+
+Previous projects and studies have demonstrated that satellite imagery can estimate multiple forms of degradation is water quality. They have mostly shown salinity and sediment related pollution. But as stated previously, phosphorus which is much more difficult to detect. 
+
+Olmanson et al. (2011) showed that Landsat imagery could estimate water quality in lakes across Minnesota, while Dabrowski and de Klerk (2013) examined watershed impacts on rivers in South Africa. These projects and studies demonstrated the opportunities and value of remote sensing for monitoring environmental conditions. They mostly focused on watersheds and lakes.
+
+This analysis has expanded on the prior work and literature by combining Landsat derived environmental indicators with chemistry observations across rivers in South Africa. For my analysis specifically, I examined whether remote sensing of land use characteristics could provide us with helpful signals for Dissolved Reactive Phosphorus concentrations.
+
+
+# Data Sources and Acquisition
+
+## Water Quality Dataset
+
+The primary water-quality dataset was obtained from the South African Department of Water and Sanitation and distributed through the Kaggle EY AI Data Challenge.
+
+The dataset included:
+- 9,319 observations
+- 162 river monitoring stations
+- measurements collected between 2011 and 2015
+- three primary targets:
+  - Total Alkalinity (TA)
+  - Electrical Conductance (EC)
+  - Dissolved Reactive Phosphorus (DRP)
+
+```{r}
+# Load water quality dataset
+water_quality <- read_csv(
+  "data/water_quality_training_dataset.csv"
+)
+
+head(water_quality)
+```
+
+## Landsat 8 Data
+
+Environmental variables were extracted from Landsat 8 Collection 2 Surface Reflectance imagery.
+
+The analysis focused on:
+- NDMI (vegetation moisture)
+- NIR (healthy vegetation)
+- Green reflectance
+- SWIR16 (urban/dry surfaces)
+- SWIR22 (impervious surfaces)
+
+```{r}
+# Load Landsat features
+landsat_features <- read_csv(
+  "data/landsat_features_training.csv"
+)
+
+head(landsat_features)
+```
+
+# Data Cleaning and Quality Control
+
+The water-quality and Landsat datasets were merged using shared spatial and temporal identifiers.
+
+```{r}
+# Merge datasets
+sq5_data <- water_quality %>%
+  inner_join(
+    landsat_features,
+    by = c("Latitude", "Longitude", "Sample Date")
+  )
+```
+
+
+Cloud contamination represented a major limitation in the Landsat imagery. Approximately 22% of scenes contained substantial cloud cover, while rainy-season conditions rendered nearly 35% of scenes unusable.
+
+Summary stats for the primary variables are shown below.
+
+```{r}
+summary(
+  sq5_data %>%
+    select(DRP, NDMI, nir, green, swir16, swir22)
+)
+```
+
+# EDA
+
+The first stage of analysis examined relationships between dissolved phosphorus and Landsat-derived land-use indicators.
+
+# Distribution of Dissolved Reactive Phosphorus
+
+Before analyzing relationships with satellite variables, the distribution of DRP concentrations was analyzed.
+
+```{r}
+ggplot(sq5_data, aes(DRP)) +
+  geom_density(fill = "steelblue", alpha = 0.5) +
+  labs(
+    title = "Density Distribution of Dissolved Reactive Phosphorus",
+    x = "Dissolved Reactive Phosphorus",
+    y = "Density"
+  )
+```
+
+The density distribution revealed that DRP values were strongly right-skewed. It also showed most observations clustered at relatively low concentrations and a smaller number of stations exhibiting elevated phosphorus levels. The skewed distribution indicates that phosphorus contamination may be driven by localized environmental conditions and/or episodic runoff events rather than broad regional patterns.
+
+# Correlation Matrix
+
+To evaluate relationships between DRP and land-use indicators, a correlation matrix was constructed using Landsat-derived variables.
+
+```{r}
+# Create correlation matrix
+corr_matrix <- sq5_data %>%
+  select(DRP, NDMI, nir, green, swir16, swir22) %>%
+  cor(use = "complete.obs")
+
+# Plot correlation matrix
+corrplot(
+  corr_matrix,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  tl.col = "black",
+  number.cex = 0.7
+)
+```
+
+The correlation plot revealed extremely weak linear relationships between dissolved phosphorus and all spectral variables.
+
+```{r}
+# Correlations with DRP
+correlations <- sq5_data %>%
+  summarize(
+    NDMI = cor(DRP, NDMI, use = "complete.obs"),
+    nir = cor(DRP, nir, use = "complete.obs"),
+    green = cor(DRP, green, use = "complete.obs"),
+    swir16 = cor(DRP, swir16, use = "complete.obs"),
+    swir22 = cor(DRP, swir22, use = "complete.obs")
+  )
+
+correlations %>%
+  pivot_longer(
+    everything(),
+    names_to = "Variable",
+    values_to = "Correlation"
+  ) %>%
+  mutate(
+    Correlation = round(Correlation, 3)
+  ) %>%
+  gt() %>%
+  tab_header(
+    title = "Correlations Between DRP and Landsat Features"
+  )
+```
+
+::: {.callout-important}
+## Key Finding
+
+The analyzed correlations between Dissolved Reactive Phosphorus and Landsat land use indicators remained very weak. This suggest that phosphorus is difficult to estimate or detect in satellite imagery.
+:::
+
+# DRP vs NDMI
+
+NDMI was used as a vegetation-moisture proxy to investigate whether greener and wetter landscapes were associated with lower phosphorus concentrations.
+
+```{r}
+ggplot(sq5_data, aes(NDMI, DRP)) +
+  geom_point(alpha = 0.35) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "DRP vs NDMI",
+    subtitle = "Vegetation moisture shows a weak negative relationship",
+    x = "NDMI",
+    y = "Dissolved Reactive Phosphorus"
+  )
+```
+
+The scatterplot reveals a weak negative relationship between NDMI and Dissolved Reactive Phosphorus concentration. Areas with denser vegetation and higher moisture content tended to exhibit slightly lower phosphorus levels.
+
+However, the large amount of scatter in the data indicates that vegetation alone explains very little of the variation in phosphorus concentration.
+
+# DRP vs SWIR16
+
+SWIR16 was analyzed as a proxy for urban density and impervious surfaces.
+
+```{r}
+ggplot(sq5_data, aes(swir16, DRP)) +
+  geom_point(alpha = 0.35) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "DRP vs SWIR16",
+    subtitle = "Urban-density proxy shows weak positive relationship",
+    x = "SWIR16",
+    y = "Dissolved Reactive Phosphorus"
+  )
+```
+
+Unlike NDMI, SWIR16 demonstrated a weak positive relationship with dissolved phosphorus concentration. This suggests that urbanized or less vegetated areas may contribute slightly elevated phosphorus levels through runoff and impervious surface effects. But the rlationship is still very weak overall
+
+# Interpretation and Discussion
+
+The major findings of my analysis is that Dissolved Reactive Phosphorus has an extremely weak correlation with Landsat derived land use indicators. This result is pretty significant because it shows that medium resolution remote sensing has its limitations when it comes to detecting nutrients.
+Some factors can help explain the weak correlations. 
+
+The first one is that phosphorus movements is event driven. Rainfall runoff most likely transports fertilizers and agricultural waste into rivers during certain short periods of precipitation. Phosphorus contamination can also be influenced by laocalized watershed processes that occur at smaller scales than the Landsat's 30 meter pixels. Another factor is that Dissolved Reactive Phosphorus is not optically strong compared to suspended sediments and salts.
+
+The weak negative correlation between DRP and NDMI indicates that healthy vegetation can suppress phosphorus accumulation throught nutrient uptake and erosion control. The weak positive correlation between SWIR16 and DRP can refelct urban runoff from impervious surfaces.
+
+Unfortunately, none of these relationships were strong enough to support reliable phosphorus prediction using Landsat imagery alone.
+
+# Connecting to the Overarching Question
+
+The analysis contribues to the overarching question regarding whether satellite datasets can forecast water quality in rivers across South Africa. The results reinforce one of the conclusions of the project, remote sensing performs substantially much more better for salts and mineral related pollutants compared to dissolved phosphorus. Other analyses presented stronger predictive correlations for electrical conducatnce and alkalinity, but my analysis demonstrates that phosphorus remains difficult to estimate spectrally. This suggests that remote sensing can partially explain degradation in rivers, but limitations remain.
+
+# Limitations and Future Work
+
+Several limitations affected this analysis. Firstly, the Landsat 8 Imagery dataset had a spatial resolution of 30 meter which may not be sufficient enough to detect localized phosphorus transport mechanisms. Alsom cloud cover and contamination reduced the umber of usable observations, specifically during rainy seasons. Another limitation is that the analysis focused on linear relationships, there is a possibility of nonlinear correlations that can be explored in the future.
+
+In order to improve the analysis, we must implement:
+- watershed boundaries
+- Sentinel-2 imagery
+- rainfall intensity data
+- fertilizer application records
+- ml models capable of finding nonlinear relationships
+
+# Conclusion
+The analysis tested whether Landsat derived land use indicators could improve the understanding of Dissolved Reactive Phosphorus concentrations in the rivers of South Africa. The results showed that urban density proxies have a weak positive correlation and that vegetaion related variables have a weak negative correlation. These results suggest that phosphorus is difficult to estimate using medium resolution satellite imagery on its own. Overall, the analysis presents the strengths and limitions of remote sensing for water quality monitoring and testing in rivers. It reinforces the importance and need of pollutant specific environmental modeling.
