@@ -286,3 +286,10 @@ In order to improve the analysis, we must implement several items:
 
 # Conclusion
 The analysis tested whether Landsat derived land use indicators could improve the understanding of Dissolved Reactive Phosphorus concentrations in the rivers of South Africa. The results showed that urban density proxies have a weak positive correlation and that vegetation related variables have a weak negative correlation. Basically all the observed correlations remained really small. These results suggest that phosphorus is difficult to estimate using medium resolution satellite imagery on its own. Overall, the analysis presents the strengths and limitations of remote sensing for water quality monitoring and testing in rivers. It reinforces the importance and need of pollutant specific environmental modeling. But remote sensing remains valuable to understanding environmental conditions that are broad, but Dissolved Reactive Phosphorus contamination likely requires additional hydrological and watershed-based information to support a prediction that is much more reliable.
+
+
+::: {.callout-note title="AI Usage Statement" collapse="true"}
+
+ChatGPT was used to help write the code in this project, but all non-code text was generated without the use of any Generative AI tools. Additionally, ChatGPT was used to provide additional background information on the topic and to brainstorm ideas for the final open-ended prompt.
+
+:::
