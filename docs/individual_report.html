@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="janielave">
+
+<title>individual_report – STA 9750 Submission Material</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f245066ca199b7326ac6b360085ddf3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STA 9750 Submission Material</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#background-prior-literature" id="toc-background-prior-literature" class="nav-link" data-scroll-target="#background-prior-literature">Background &amp; Prior Literature</a></li>
+  <li><a href="#data-sources-and-acquisition" id="toc-data-sources-and-acquisition" class="nav-link" data-scroll-target="#data-sources-and-acquisition">Data Sources and Acquisition</a>
+  <ul class="collapse">
+  <li><a href="#water-quality-dataset" id="toc-water-quality-dataset" class="nav-link" data-scroll-target="#water-quality-dataset">Water Quality Dataset</a></li>
+  <li><a href="#landsat-8-data" id="toc-landsat-8-data" class="nav-link" data-scroll-target="#landsat-8-data">Landsat 8 Data</a></li>
+  </ul></li>
+  <li><a href="#data-cleaning-and-quality-control" id="toc-data-cleaning-and-quality-control" class="nav-link" data-scroll-target="#data-cleaning-and-quality-control">Data Cleaning and Quality Control</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
+  <li><a href="#distribution-of-dissolved-reactive-phosphorus" id="toc-distribution-of-dissolved-reactive-phosphorus" class="nav-link" data-scroll-target="#distribution-of-dissolved-reactive-phosphorus">Distribution of Dissolved Reactive Phosphorus</a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix">Correlation Matrix</a></li>
+  <li><a href="#dissolved-reactive-phosphorus-vs-ndmi" id="toc-dissolved-reactive-phosphorus-vs-ndmi" class="nav-link" data-scroll-target="#dissolved-reactive-phosphorus-vs-ndmi">Dissolved Reactive Phosphorus vs NDMI</a></li>
+  <li><a href="#dissolved-reactive-phosphorus-vs-swir16" id="toc-dissolved-reactive-phosphorus-vs-swir16" class="nav-link" data-scroll-target="#dissolved-reactive-phosphorus-vs-swir16">Dissolved Reactive Phosphorus vs SWIR16</a></li>
+  <li><a href="#interpretation-and-discussion" id="toc-interpretation-and-discussion" class="nav-link" data-scroll-target="#interpretation-and-discussion">Interpretation and Discussion</a></li>
+  <li><a href="#connecting-to-the-overarching-question" id="toc-connecting-to-the-overarching-question" class="nav-link" data-scroll-target="#connecting-to-the-overarching-question">Connecting to the Overarching Question</a></li>
+  <li><a href="#limitations-and-future-work" id="toc-limitations-and-future-work" class="nav-link" data-scroll-target="#limitations-and-future-work">Limitations and Future Work</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">individual_report</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>janielave </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Rivers in South Africa are impacted by agriculture, urbanization, and climate varibles. Water quality testing and is important in order to maintain a safe water source to the public and environment. However, field-based testing monitoring is expensive and has geographical limits, especially across large river systems.</p>
+<p>Advances in satellite remote sensing provide new forms of opportunities when it comes to testing and monitoring water quality. The use of imagery and climate datasets helps to study the condtions of rivers in South Africa. In this analysis we will use imagery and climate datasets to see if they can explain the water quality of rivers across South Africa</p>
+<p>The overarching question for the project was:</p>
+<blockquote class="blockquote">
+<p><em>Can we accurately forecast river water quality parameters in South Africa using publicly available satellite and climate datasets?</em></p>
+</blockquote>
+<p>My contribution focused on Specific Question 5:</p>
+<blockquote class="blockquote">
+<p><em>Do land use characteristics surrounding each river station improve predictions of Dissolved Reactive Phosphorus (DRP), and which land use type is most associated with elevated phosphorus?</em></p>
+</blockquote>
+<p>Phosphorus contamination was difficult to detect because it does not present strong spectral signatures in satellite imagery. Therefore, the purpose of the analysis is to determine whether or not land use indicators from the Landsat 8 dataset show meaningful correlations with Dissolved Reactive Phosphorus. These indicators include vegetation and urban density proxies.</p>
+</section>
+<section id="background-prior-literature" class="level1">
+<h1>Background &amp; Prior Literature</h1>
+<p>Previous projects and studies have demonstrated that satellite imagery can estimate multiple forms of degradation in water quality. They have mostly shown salinity and sediment related pollution. But as stated previously, phosphorus which is much more difficult to detect.</p>
+<p>Olmanson et al.&nbsp;(2011) showed that Landsat imagery could estimate water quality in lakes across Minnesota, while Dabrowski and de Klerk (2013) examined watershed impacts on rivers in South Africa. These projects and studies demonstrated the opportunities and value of remote sensing for monitoring environmental conditions. They mostly focused on watersheds and lakes and conducted the studies in a smaller scale when it comes to the location. The Huizenga et al.&nbsp;(2013) study established a baseline for South African rivers by using historical field measurements. But there study did not integrate satellite based imagery environmental indicators.</p>
+<p>This analysis has expanded on the prior work and literature by combining Landsat derived environmental indicators with chemistry observations across rivers in South Africa. For my analysis specifically, I examined whether remote sensing of land use characteristics could provide us with helpful signals for Dissolved Reactive Phosphorus concentrations.</p>
+</section>
+<section id="data-sources-and-acquisition" class="level1">
+<h1>Data Sources and Acquisition</h1>
+<section id="water-quality-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="water-quality-dataset">Water Quality Dataset</h2>
+<p>The primary water-quality dataset was obtained from the South African Department of Water and Sanitation and distributed through the Kaggle EY AI Data Challenge for this current year, this is actually why my group was interested in the data set.</p>
+<p>The dataset included: - 9,319 observations - 162 river monitoring stations - measurements collected between 2011 and 2015 - three primary targets: - Total Alkalinity (TA) - Electrical Conductance (EC) - Dissolved Reactive Phosphorus (DRP)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load water quality dataset</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>water_quality <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/water_quality_training_dataset.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(water_quality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  Latitude Longitude `Sample Date` `Total Alkalinity` `Electrical Conductance`
+     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;                    &lt;dbl&gt;
+1    -28.8      17.7 02-01-2011                 129.                      555 
+2    -26.9      28.9 03-01-2011                  74.7                     163.
+3    -26.4      28.1 03-01-2011                  89.3                     573 
+4    -27.7      27.2 03-01-2011                  82                       204.
+5    -27.4      27.3 03-01-2011                  56.1                     145.
+6    -27.0      26.7 04-01-2011                  82.2                     290.
+# ℹ 1 more variable: `Dissolved Reactive Phosphorus` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="landsat-8-data" class="level2">
+<h2 class="anchored" data-anchor-id="landsat-8-data">Landsat 8 Data</h2>
+<p>Environmental variables were extracted from Landsat 8 Collection 2 Surface Reflectance imagery. The Landsat 8 data set provided 30 meter spatial resolution and included multiple spectral bands that are useful for this project and analysis.</p>
+<p>The analysis focused on: - NDMI (vegetation moisture) - NIR (healthy vegetation) - Green reflectance - SWIR16 (urban/dry surfaces) - SWIR22 (impervious surfaces)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Landsat features</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>landsat_features <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/landsat_features_training.csv"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(landsat_features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+  Latitude Longitude `Sample Date`    nir  green swir16 swir22    NDMI   MNDWI
+     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1    -28.8      17.7 02-01-2011    11190  11426   7688.  7645   0.186   0.196 
+2    -26.9      28.9 03-01-2011    17658.  9550  13746. 10574   0.125  -0.180 
+3    -26.4      28.1 03-01-2011    15210  10720  17974  14201  -0.0833 -0.253 
+4    -27.7      27.2 03-01-2011    14887  10943  13522  11403   0.0480 -0.105 
+5    -27.4      27.3 03-01-2011    16828.  9502. 12666.  9643   0.141  -0.143 
+6    -27.0      26.7 04-01-2011    12434. 10434.  9580.  8532.  0.130   0.0427</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-cleaning-and-quality-control" class="level1">
+<h1>Data Cleaning and Quality Control</h1>
+<p>Data quality control was extremely important especially because the Landsat 8 derived land use observations and the water quality measurements were taken throughout multiple time periods. The data sets measurements were also collected from multiple sources.</p>
+<p>Unfortunately, the data set contained many missing Dissolved Reactive Phosphorus measurements, therefore, they were removed. The missing values were mostly from stations that found themselves located in the eastern part of South Africa.</p>
+<p>The water-quality and Landsat datasets were merged using shared spatial and temporal identifiers.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge datasets</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sq5_data <span class="ot">&lt;-</span> water_quality <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    landsat_features,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Latitude"</span>, <span class="st">"Longitude"</span>, <span class="st">"Sample Date"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Variables were renamed for readability and observations with missing DRP measurements were removed.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename variables</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sq5_data <span class="ot">&lt;-</span> sq5_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">DRP =</span> <span class="st">`</span><span class="at">Dissolved Reactive Phosphorus</span><span class="st">`</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TA =</span> <span class="st">`</span><span class="at">Total Alkalinity</span><span class="st">`</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EC =</span> <span class="st">`</span><span class="at">Electrical Conductance</span><span class="st">`</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove missing DRP values</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sq5_data <span class="ot">&lt;-</span> sq5_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(DRP))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Cloud contamination represented a major limitation in the Landsat imagery. Approximately 22% of scenes contained substantial cloud cover, while rainy-season conditions rendered nearly 35% of scenes unusable.</p>
+<p>Summary stats for the primary variables are shown below.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  sq5_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(DRP, NDMI, nir, green, swir16, swir22)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      DRP              NDMI               nir            green      
+ Min.   :  5.00   Min.   :-0.32829   Min.   : 3992   Min.   : 4045  
+ 1st Qu.: 10.00   1st Qu.:-0.03687   1st Qu.:12724   1st Qu.: 9370  
+ Median : 20.00   Median : 0.02155   Median :14183   Median : 9801  
+ Mean   : 43.53   Mean   : 0.02137   Mean   :14045   Mean   : 9983  
+ 3rd Qu.: 48.00   3rd Qu.: 0.07330   3rd Qu.:15514   3rd Qu.:10286  
+ Max.   :195.00   Max.   : 0.56791   Max.   :65535   Max.   :65535  
+                  NA's   :1085       NA's   :1085    NA's   :1085   
+     swir16          swir22     
+ Min.   : 3672   Min.   : 3634  
+ 1st Qu.:11761   1st Qu.: 9840  
+ Median :13704   Median :11265  
+ Mean   :13567   Mean   :11426  
+ 3rd Qu.:15426   3rd Qu.:12896  
+ Max.   :65535   Max.   :31202  
+ NA's   :1085    NA's   :1085   </code></pre>
+</div>
+</div>
+</section>
+<section id="exploratory-data-analysis" class="level1">
+<h1>Exploratory Data Analysis</h1>
+<p>The first stage of analysis examined relationships between dissolved phosphorus and Landsat-derived land-use indicators.</p>
+</section>
+<section id="distribution-of-dissolved-reactive-phosphorus" class="level1">
+<h1>Distribution of Dissolved Reactive Phosphorus</h1>
+<p>Before analyzing relationships with satellite variables, the distribution of DRP concentrations was analyzed.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sq5_data, <span class="fu">aes</span>(DRP)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Density Distribution of Dissolved Reactive Phosphorus"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Dissolved Reactive Phosphorus"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="individual_report_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The density distribution revealed that DRP values were strongly right-skewed. It also showed most observations clustered at relatively low concentrations and a smaller number of stations exhibiting elevated phosphorus levels. The skewed distribution indicates that phosphorus contamination may be driven by localized environmental conditions and/or episodic runoff events rather than broad regional patterns.</p>
+</section>
+<section id="correlation-matrix" class="level1">
+<h1>Correlation Matrix</h1>
+<p>To evaluate relationships between DRP and land-use indicators, a correlation matrix was constructed using Landsat-derived variables.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create correlation matrix</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="ot">&lt;-</span> sq5_data <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(DRP, NDMI, nir, green, swir16, swir22) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot correlation matrix</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  corr_matrix,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"color"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"upper"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">addCoef.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">tl.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">number.cex =</span> <span class="fl">0.7</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="individual_report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The correlation plot revealed extremely weak linear relationships between dissolved phosphorus and all spectral variables.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlations with DRP</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>correlations <span class="ot">&lt;-</span> sq5_data <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">NDMI =</span> <span class="fu">cor</span>(DRP, NDMI, <span class="at">use =</span> <span class="st">"complete.obs"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nir =</span> <span class="fu">cor</span>(DRP, nir, <span class="at">use =</span> <span class="st">"complete.obs"</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">green =</span> <span class="fu">cor</span>(DRP, green, <span class="at">use =</span> <span class="st">"complete.obs"</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">swir16 =</span> <span class="fu">cor</span>(DRP, swir16, <span class="at">use =</span> <span class="st">"complete.obs"</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">swir22 =</span> <span class="fu">cor</span>(DRP, swir22, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>correlations <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">everything</span>(),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Variable"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Correlation"</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">Correlation =</span> <span class="fu">round</span>(Correlation, <span class="dv">3</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Correlations Between DRP and Landsat Features"</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="cxdefzbfst" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cxdefzbfst table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#cxdefzbfst thead, #cxdefzbfst tbody, #cxdefzbfst tfoot, #cxdefzbfst tr, #cxdefzbfst td, #cxdefzbfst th {
+  border-style: none;
+}
+
+#cxdefzbfst p {
+  margin: 0;
+  padding: 0;
+}
+
+#cxdefzbfst .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#cxdefzbfst .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cxdefzbfst .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cxdefzbfst .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cxdefzbfst .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cxdefzbfst .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cxdefzbfst .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cxdefzbfst .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cxdefzbfst .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#cxdefzbfst .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#cxdefzbfst .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cxdefzbfst .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cxdefzbfst .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cxdefzbfst .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cxdefzbfst .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cxdefzbfst .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#cxdefzbfst .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#cxdefzbfst .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#cxdefzbfst .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cxdefzbfst .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#cxdefzbfst .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cxdefzbfst .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#cxdefzbfst .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cxdefzbfst .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cxdefzbfst .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cxdefzbfst .gt_left {
+  text-align: left;
+}
+
+#cxdefzbfst .gt_center {
+  text-align: center;
+}
+
+#cxdefzbfst .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cxdefzbfst .gt_font_normal {
+  font-weight: normal;
+}
+
+#cxdefzbfst .gt_font_bold {
+  font-weight: bold;
+}
+
+#cxdefzbfst .gt_font_italic {
+  font-style: italic;
+}
+
+#cxdefzbfst .gt_super {
+  font-size: 65%;
+}
+
+#cxdefzbfst .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#cxdefzbfst .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#cxdefzbfst .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#cxdefzbfst .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#cxdefzbfst .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#cxdefzbfst .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#cxdefzbfst .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#cxdefzbfst .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#cxdefzbfst div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border">Correlations Between DRP and Landsat Features</td>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Variable</th>
+<th id="Correlation" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Correlation</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Variable">NDMI</td>
+<td class="gt_row gt_right" headers="Correlation">-0.085</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Variable">nir</td>
+<td class="gt_row gt_right" headers="Correlation">-0.005</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Variable">green</td>
+<td class="gt_row gt_right" headers="Correlation">0.008</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Variable">swir16</td>
+<td class="gt_row gt_right" headers="Correlation">0.060</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Variable">swir22</td>
+<td class="gt_row gt_right" headers="Correlation">0.066</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Key Finding
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The analyzed correlations between Dissolved Reactive Phosphorus and Landsat land use indicators remained very weak. This suggests that phosphorus is difficult to estimate or detect in satellite imagery. The strongest correlations were located with SWIR22 and SWIR16, but they’re still considered pretty weak and insufficient. With vegetation indicators like NDMI and NIR the correlation was negative. Therefore, it is another weak correlation. No individual Landsat 8 data set land use indicator provides a strong and reliable predictive factor for Dissolved Reactive Phosphorus.</p>
+</div>
+</div>
+</section>
+<section id="dissolved-reactive-phosphorus-vs-ndmi" class="level1">
+<h1>Dissolved Reactive Phosphorus vs NDMI</h1>
+<p>NDMI was used as a vegetation-moisture proxy to investigate whether greener and wetter landscapes were associated with lower phosphorus concentrations.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sq5_data, <span class="fu">aes</span>(NDMI, DRP)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"DRP vs NDMI"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Vegetation moisture shows a weak negative relationship"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"NDMI"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Dissolved Reactive Phosphorus"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="individual_report_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The scatterplot reveals a weak negative relationship between NDMI and Dissolved Reactive Phosphorus concentration. Areas with denser vegetation and higher moisture content tended to exhibit slightly lower phosphorus levels.</p>
+<p>However, the large amount of scatter in the data indicates that vegetation alone explains very little of the variation in phosphorus concentration.</p>
+<p>Therefore, we can establish that vegetation land use is not a reliable or strong predictor for phosphorus concentration in South African river stations.</p>
+<p>A possible explanation for these results is that vegetation land use may reduce nutrient runoff over large time periods, but phosphorus movements or transport is more heavily affected by rainfall events.</p>
+</section>
+<section id="dissolved-reactive-phosphorus-vs-swir16" class="level1">
+<h1>Dissolved Reactive Phosphorus vs SWIR16</h1>
+<p>SWIR16 was analyzed as a proxy for urban density and impervious surfaces.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sq5_data, <span class="fu">aes</span>(swir16, DRP)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"DRP vs SWIR16"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Urban-density proxy shows weak positive relationship"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"SWIR16"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Dissolved Reactive Phosphorus"</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="individual_report_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unlike NDMI, SWIR16 demonstrated a weak positive relationship with dissolved phosphorus concentration. SWIR16 are usually associated with dry land and urban surfaces like streets or sidewalks. Basically asphalt or cement. This suggests that urbanized or less vegetated areas may contribute slightly elevated phosphorus levels through runoff and impervious surface effects. But the relationship is still very weak overall. We can determine that urban density land use is also not a strong or reliable source of prediction for phosphorus concentration based on the Landsat 8 data set.</p>
+</section>
+<section id="interpretation-and-discussion" class="level1">
+<h1>Interpretation and Discussion</h1>
+<p>The major findings of my analysis is that Dissolved Reactive Phosphorus has an extremely weak direct correlation with Landsat derived land use indicators. Unlike other pollutants such as alkalinity and electrical conductance. This result is pretty significant because it shows that medium resolution at 30-meter remote sensing has its limitations when it comes to detecting nutrients. Some factors can help explain the weak correlations that we witnessed while conducting this analysis.</p>
+<p>The first one is that phosphorus movements is event driven. Rainfall runoff most likely transports fertilizers and agricultural waste into rivers during certain short periods of precipitation. Sometimes during these time periods the rainfall is quite intense. This makes it difficult especially when using periodic satellite imagery like the one present in the Landsat 8 data set. Phosphorus contamination can also be influenced by localized watershed processes that occur at smaller scales than the Landsat’s 30 meter pixels. Agricultural drainage channels, waste water discharge points, and small scale land management practices or decisions can all be contributing factors to phosphorus variability without producing strong spectral detections or signatures. Another factor is that Dissolved Reactive Phosphorus is not optically strong compared to suspended sediments and salts.</p>
+<p>The weak negative correlation between Dissolved Reactive Phosphorus and NDMI indicates that healthy vegetation can suppress phosphorus accumulation through nutrient uptake and erosion control. The weak positive correlation between SWIR16 and Dissolved Reactive Phosphorus can reflect urban runoff from impervious surfaces.</p>
+<p>Unfortunately, none of these relationships were strong enough to support reliable phosphorus prediction using Landsat imagery alone.</p>
+</section>
+<section id="connecting-to-the-overarching-question" class="level1">
+<h1>Connecting to the Overarching Question</h1>
+<p>The analysis contributes to the overarching question regarding whether satellite data sets can forecast water quality in rivers across South Africa. The results reinforce one of the conclusions of the project, remote sensing performs substantially much more better for salts and mineral related pollutants compared to dissolved phosphorus. Therefore, we can see that pollutant types affect the performance of remote sensing. Other analyses presented stronger predictive correlations for electrical conductance and alkalinity which are considered ionic pollutants, but my analysis demonstrates that phosphorus, which is a dissolved nutrient, remains difficult to estimate spectrally. This suggests that remote sensing can partially explain degradation in rivers, but limitations remain. The inability of Landsat derived land use indicators to reliably predict Dissolved Reactive Phosphorus demonstrates that we must add additional environmental data sets that include information about rainfall, watershed boundaries, and agricultural land use.</p>
+</section>
+<section id="limitations-and-future-work" class="level1">
+<h1>Limitations and Future Work</h1>
+<p>Several limitations affected this analysis. Firstly, the Landsat 8 Imagery dataset had a spatial resolution of 30 meter which may not be sufficient enough to detect localized phosphorus transport mechanisms. Also cloud cover and contamination reduced the number of usable observations, specifically during rainy seasons in which nutrient runoff is much more present. Another limitation is that the analysis focused on linear relationships, there is a possibility of nonlinear correlations that can be explored in the future. Nonlinear correlations between vegetation, watershed processes, and climate conditions can possibly exist.</p>
+<p>In order to improve the analysis, we must implement several items: - watershed boundaries - Sentinel-2 imagery will probably provide improved detection of certain land uses - rainfall intensity data - fertilizer application records - ml models capable of finding nonlinear relationships between environmental variables</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>The analysis tested whether Landsat derived land use indicators could improve the understanding of Dissolved Reactive Phosphorus concentrations in the rivers of South Africa. The results showed that urban density proxies have a weak positive correlation and that vegetation related variables have a weak negative correlation. Basically all the observed correlations remained really small. These results suggest that phosphorus is difficult to estimate using medium resolution satellite imagery on its own. Overall, the analysis presents the strengths and limitations of remote sensing for water quality monitoring and testing in rivers. It reinforces the importance and need of pollutant specific environmental modeling. But remote sensing remains valuable to understanding environmental conditions that are broad, but Dissolved Reactive Phosphorus contamination likely requires additional hydrological and watershed-based information to support a prediction that is much more reliable.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/JanielAve\.github\.io\/STA9750-2026-SPRING\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
